@@ -1,1 +1,1 @@
-# Smart-Rental
+<h1 align="center">Smart-Rental</h1>
