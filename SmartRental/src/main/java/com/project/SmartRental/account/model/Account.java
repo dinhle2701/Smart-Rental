@@ -27,6 +27,8 @@ public class Account {
 
     private String password;
 
+    private String role;
+
     private LocalDateTime createAt;
 
     private LocalDateTime updateAt;

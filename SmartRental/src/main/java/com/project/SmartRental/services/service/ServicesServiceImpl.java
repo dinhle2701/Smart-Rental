@@ -67,14 +67,43 @@ public class ServicesServiceImpl implements ServicesService {
     }
 
     @Override
-    public Services updateService(Long id, ServiceRequest serviceRequest) {
+    public ServiceResponse updateService(Long id, ServiceRequest serviceRequest) {
         Services services = serviceRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException(
                 "Service not found with id: " + id,
                 "/api/services/" + id
         ));
-        services.setServiceName(serviceRequest.getServiceName());
-        services.setServiceType(serviceRequest.getServiceType());
-        return serviceRepository.save(services);
+
+        boolean isUpdated = false;
+
+        if (serviceRequest.getServiceName() != null &&
+                !serviceRequest.getServiceName().equals(services.getServiceName())) {
+            services.setServiceName(serviceRequest.getServiceName());
+            isUpdated = true;
+        }
+
+        if (serviceRequest.getServiceType() != null &&
+                !serviceRequest.getServiceType().equals(services.getServiceType())) {
+            services.setServiceType(serviceRequest.getServiceType());
+            isUpdated = true;
+        }
+
+        if (isUpdated) {
+            services = serviceRepository.save(services);
+        }
+
+//        services.setServiceName(serviceRequest.getServiceName());
+//        services.setServiceType(serviceRequest.getServiceType());
+//        Services updated = serviceRepository.save(services);
+
+        if (isUpdated) {
+            services = serviceRepository.save(services);
+        }
+
+        return ServiceResponse.builder()
+                .id(services.getId())
+                .serviceName(services.getServiceName())
+                .serviceType(services.getServiceType())
+                .build();
     }
 
     @Override

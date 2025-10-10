@@ -20,7 +20,7 @@ public interface ServicesService {
 
     Optional<ServiceResponse> getServiceById(Long id);
 
-    Services updateService(Long id, ServiceRequest serviceRequest);
+    ServiceResponse updateService(Long id, ServiceRequest serviceRequest);
 
     void deleteService(Long id);
 }

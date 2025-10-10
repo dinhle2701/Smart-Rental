@@ -70,12 +70,12 @@ public class ServiceController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Services> updateService(
+    public ResponseEntity<ServiceResponse> updateService(
             @PathVariable Long id,
             @RequestBody ServiceRequest serviceRequest
     ){
         try {
-            Services services = servicesService.updateService(id, serviceRequest);
+            ServiceResponse services = servicesService.updateService(id, serviceRequest);
             return new ResponseEntity<>(services, HttpStatus.OK);
         } catch (ResourceNotFoundException e){
             throw e;
