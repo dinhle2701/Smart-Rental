@@ -2,6 +2,8 @@ package com.project.SmartRental.vehicle.service;
 
 import java.util.Optional;
 
+import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
+import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -11,13 +13,13 @@ import com.project.SmartRental.vehicle.model.Vehicle;
 @Service
 public interface VehicleService {
 
-    Page<Vehicle> getAllVehicle(Pageable pageable);
+    Page<VehicleResponse> getAllVehicle(Pageable pageable);
 
-    Optional<Vehicle> getVehicleById(Long id);
+    Optional<VehicleResponse> getVehicleById(Long id);
 
-    Vehicle createVehicle(Vehicle vehicle);
+    VehicleResponse createVehicle(VehicleRequest vehicleRequest);
 
-    Vehicle updateVehicleById(Long id, Vehicle vehicleUpdate);
+    VehicleResponse updateVehicleById(Long id, VehicleRequest vehicleRequest);
 
     void deleteVehicleById(Long id);
 }

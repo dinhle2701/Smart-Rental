@@ -50,11 +50,6 @@ public class ServicesServiceImpl implements ServicesService {
 
     @Override
     public Optional<ServiceResponse> getServiceById(Long id) {
-        var service = serviceRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException(
-                "Service not found with id: " + id,
-                "/api/services/" + id
-        ));
         return serviceRepository.findById(id)
                 .map(services -> ServiceResponse.builder()
                 .id(services.getId())

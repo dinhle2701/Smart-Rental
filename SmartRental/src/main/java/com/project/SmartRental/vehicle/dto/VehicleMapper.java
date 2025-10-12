@@ -1,16 +1,15 @@
-package com.project.SmartRental.vehicle.dto;
+// package com.project.SmartRental.vehicle.dto;
 
-import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
-import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
-import com.project.SmartRental.vehicle.model.Vehicle;
-import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+// import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "spring")
-public interface VehicleMapper {
+// import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
+// import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
+// import com.project.SmartRental.vehicle.model.Vehicle;
 
-    Vehicle toEntity(VehicleRequest request);
+// @Mapper(componentModel = "spring")
+// public interface VehicleMapper {
 
-    VehicleResponse toResponse(Vehicle entity);
-}
+//     Vehicle toEntity(VehicleRequest request);
 
+//     VehicleResponse toResponse(Vehicle entity);
+// }

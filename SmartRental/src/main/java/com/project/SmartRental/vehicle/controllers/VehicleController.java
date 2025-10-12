@@ -25,7 +25,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.SmartRental.exception.custom.ResourceNotFoundException;
-import com.project.SmartRental.vehicle.dto.VehicleMapper;
 import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
 import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
 import com.project.SmartRental.vehicle.model.Vehicle;
@@ -48,8 +47,6 @@ public class VehicleController {
 
     @Autowired
     private VehicleService vehicleService;
-    @Autowired
-    private VehicleMapper vehicleMapper;
     private static final Logger log = LoggerFactory.getLogger(VehicleController.class);
 
     // get all
@@ -59,23 +56,19 @@ public class VehicleController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "0"))
     )
     @GetMapping("")
-    public ResponseEntity<Page<Vehicle>> getVehicles(
+    public ResponseEntity<Page<VehicleResponse>> getVehicles(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     ) {
-        try {
             Sort sort = sortDir.equalsIgnoreCase("asc")
                     ? Sort.by(sortBy).ascending()
                     : Sort.by(sortBy).descending();
 
             Pageable pageable = PageRequest.of(page, size, sort);
-            Page<Vehicle> vehicles = vehicleService.getAllVehicle(pageable);
+            Page<VehicleResponse> vehicles = vehicleService.getAllVehicle(pageable);
             return new ResponseEntity<>(vehicles, HttpStatus.OK);
-        } catch (RuntimeException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
     }
 
     // get by id
@@ -87,7 +80,7 @@ public class VehicleController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getVehicleById(@PathVariable Long id, HttpServletRequest request) {
         try {
-            Optional<Vehicle> vehicle = vehicleService.getVehicleById(id);
+            Optional<VehicleResponse> vehicle = vehicleService.getVehicleById(id);
 
             if (vehicle.isPresent()) {
                 log.info("✅ Found vehicle with id: {}", id);
@@ -112,22 +105,8 @@ public class VehicleController {
     )
     @PostMapping("")
     public ResponseEntity<VehicleResponse> createVehicle(@RequestBody VehicleRequest request) {
-        try {
-            Vehicle vehicle = vehicleMapper.toEntity(request);
-            Vehicle savedVehicle = vehicleService.createVehicle(vehicle);
-            VehicleResponse response = vehicleMapper.toResponse(savedVehicle);
-            return ResponseEntity.status(HttpStatus.CREATED).body(response);
-        } catch (ResourceNotFoundException e) {
-            log.warn("Vehicle resource not found: {}", e.getMessage());
-            throw e; // ✅ ném lại chính exception cũ
-        } catch (IllegalArgumentException e) {
-            log.error("Invalid request: {}", e.getMessage());
-            throw e;
-        } catch (Exception e) {
-            log.error("Unexpected error while creating vehicle", e);
-            // Nếu muốn ném về 1 lỗi chung
-            throw new DataIntegrityViolationException("");
-        }
+        VehicleResponse response = vehicleService.createVehicle(request);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     // put
@@ -137,8 +116,9 @@ public class VehicleController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "3"))
     )
     @PutMapping("/{id}")
-    public String updateVehicle(@PathVariable UUID id) {
-        return "Update vehicle with ID: " + id;
+    public ResponseEntity<VehicleResponse> updateVehicle(@PathVariable Long id, @RequestBody VehicleRequest vehicleRequest) {
+        VehicleResponse response = vehicleService.updateVehicleById(id, vehicleRequest);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // patch

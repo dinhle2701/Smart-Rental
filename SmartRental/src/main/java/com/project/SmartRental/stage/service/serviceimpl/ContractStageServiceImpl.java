@@ -1,17 +1,18 @@
 package com.project.SmartRental.stage.service.serviceimpl;
 
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
+
 import com.project.SmartRental.exception.custom.ResourceNotFoundException;
 import com.project.SmartRental.stage.dto.req.ContractStageReq;
 import com.project.SmartRental.stage.dto.res.ContractStageResp;
 import com.project.SmartRental.stage.model.ContractStage;
 import com.project.SmartRental.stage.repository.ContractStageRepository;
 import com.project.SmartRental.stage.service.ContractStageService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.stereotype.Service;
-
-import java.util.Optional;
 
 @Service
 public class ContractStageServiceImpl implements ContractStageService {
@@ -25,14 +26,14 @@ public class ContractStageServiceImpl implements ContractStageService {
         try {
             return contractStageRepository.findAll(pageable)
                     .map(contractStage -> ContractStageResp.builder()
-                            .id(contractStage.getId())
-                            .contractStageName(contractStage.getContractStageName())
-                            .description(contractStage.getDescription())
-                            .isActive(contractStage.isActive())
-                            .createAt(contractStage.getCreateAt())
-                            .build()
+                    .id(contractStage.getId())
+                    .contractStageName(contractStage.getContractStageName())
+                    .description(contractStage.getDescription())
+                    .isActive(contractStage.isActive())
+                    .createAt(contractStage.getCreateAt())
+                    .build()
                     );
-        } catch (Exception e){
+        } catch (Exception e) {
             throw new ResourceNotFoundException(e.getMessage(), e.getLocalizedMessage());
         }
     }
@@ -45,13 +46,13 @@ public class ContractStageServiceImpl implements ContractStageService {
         contractStage.setContractStageName(contractStageReq.getContractStageName());
         contractStage.setDescription(contractStageReq.getDescription());
 
-        ContractStage updated = contractStageRepository.save(contractStage);
+        ContractStage created = contractStageRepository.save(contractStage);
         return ContractStageResp.builder()
-                .id(updated.getId())
-                .contractStageName(updated.getContractStageName())
-                .description(updated.getDescription())
-                .isActive(updated.isActive())
-                .createAt(updated.getCreateAt())
+                .id(created.getId())
+                .contractStageName(created.getContractStageName())
+                .description(created.getDescription())
+                .isActive(created.isActive())
+                .createAt(created.getCreateAt())
                 .build();
     }
 
@@ -60,12 +61,12 @@ public class ContractStageServiceImpl implements ContractStageService {
     public Optional<ContractStageResp> getContractStageById(Long id) {
         return contractStageRepository.findById(id)
                 .map(contractStage -> ContractStageResp.builder()
-                        .id(contractStage.getId())
-                        .contractStageName(contractStage.getContractStageName())
-                        .isActive(contractStage.isActive())
-                        .createAt(contractStage.getCreateAt())
-                        .description(contractStage.getDescription())
-                        .build()
+                .id(contractStage.getId())
+                .contractStageName(contractStage.getContractStageName())
+                .isActive(contractStage.isActive())
+                .createAt(contractStage.getCreateAt())
+                .description(contractStage.getDescription())
+                .build()
                 );
     }
 
@@ -89,7 +90,6 @@ public class ContractStageServiceImpl implements ContractStageService {
                 && !contractStageReq.getDescription().equals(contractStage.getDescription())) {
             contractStage.setDescription(contractStageReq.getDescription());
         }
-
 
         // 3️⃣ Lưu lại thay đổi
         ContractStage updated = contractStageRepository.save(contractStage);

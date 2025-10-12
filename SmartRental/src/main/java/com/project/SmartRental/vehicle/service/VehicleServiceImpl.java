@@ -2,6 +2,9 @@ package com.project.SmartRental.vehicle.service;
 
 import java.util.Optional;
 
+import com.project.SmartRental.exception.custom.ResourceNotFoundException;
+import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
+import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,45 +20,105 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     @Override
-    public Page<Vehicle> getAllVehicle(Pageable pageable) {
-        try {
-            // TODO Auto-generated method stub
-            return vehicleRepository.findAll(pageable);
-        } catch (Exception e) {
-            // TODO: handle exception
-            return Page.empty();
+    public Page<VehicleResponse> getAllVehicle(Pageable pageable) {
+        return vehicleRepository.findAll(pageable)
+                .map(vehicle -> VehicleResponse.builder()
+                        .id(vehicle.getId())
+                        .vehicleBrand(vehicle.getVehicleBrand())
+                        .vehicleColor(vehicle.getVehicleColor())
+                        .vehicleType(vehicle.getVehicleType())
+                        .vehicleName(vehicle.getVehicleName())
+                        .vehicleLicensePlate(vehicle.getVehicleLicensePlate())
+                        .build()
+                );
+    }
+
+    @Override
+    public Optional<VehicleResponse> getVehicleById(Long id) {
+        return vehicleRepository.findById(id)
+                .map(vehicle -> VehicleResponse.builder()
+                        .id(vehicle.getId())
+                        .vehicleBrand(vehicle.getVehicleBrand())
+                        .vehicleColor(vehicle.getVehicleColor())
+                        .vehicleType(vehicle.getVehicleType())
+                        .vehicleName(vehicle.getVehicleName())
+                        .vehicleLicensePlate(vehicle.getVehicleLicensePlate())
+                        .build()
+                );
+    }
+
+    @Override
+    public VehicleResponse createVehicle(VehicleRequest vehicleRequest) {
+        Vehicle vehicle = new Vehicle();
+
+        vehicle.setVehicleName(vehicleRequest.getVehicleName());
+        vehicle.setVehicleColor(vehicleRequest.getVehicleColor());
+        vehicle.setVehicleType(vehicleRequest.getVehicleType());
+        vehicle.setVehicleBrand(vehicleRequest.getVehicleBrand());
+        vehicle.setVehicleLicensePlate(vehicleRequest.getVehicleLicensePlate());
+
+        Vehicle created = vehicleRepository.save(vehicle);
+
+        return VehicleResponse.builder()
+                .id(created.getId())
+                .vehicleBrand(created.getVehicleBrand())
+                .vehicleColor(created.getVehicleColor())
+                .vehicleType(created.getVehicleType())
+                .vehicleName(created.getVehicleName())
+                .vehicleLicensePlate(created.getVehicleLicensePlate())
+                .build();
+    }
+
+    @Override
+    public VehicleResponse updateVehicleById(Long id, VehicleRequest vehicleRequest) {
+        Vehicle vehicle = vehicleRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException(
+                        "Account not found with id: " + id,
+                        "/api/v1/account/" + id
+                )
+        );
+
+        // ✅ kiểm tra và cập nhật từng field nếu có thay đổi
+        if (vehicleRequest.getVehicleName() != null
+                && !vehicleRequest.getVehicleName().equals(vehicle.getVehicleName())) {
+            vehicle.setVehicleName(vehicleRequest.getVehicleName());
         }
-    }
 
-    @Override
-    public Optional<Vehicle> getVehicleById(Long id) {
-        // TODO Auto-generated method stub
-        Optional<Vehicle> vehicle = vehicleRepository.findById(id);
-        return vehicle;
-    }
+        if (vehicleRequest.getVehicleBrand() != null
+                && !vehicleRequest.getVehicleBrand().equals(vehicle.getVehicleBrand())) {
+            vehicle.setVehicleBrand(vehicleRequest.getVehicleBrand());
+        }
 
-    @Override
-    public Vehicle createVehicle(Vehicle vehicle) {
-        // TODO Auto-generated method stub
-        Vehicle newVehicle = new Vehicle();
-        newVehicle.setVehicleName(vehicle.getVehicleName());
-        newVehicle.setVehicleBrand(vehicle.getVehicleBrand());
-        newVehicle.setVehicleColor(vehicle.getVehicleColor());
-        newVehicle.setVehicleType(vehicle.getVehicleType());
-        newVehicle.setVehicleLicensePlate(vehicle.getVehicleLicensePlate());
-        return vehicleRepository.save(newVehicle);
-    }
+        if (vehicleRequest.getVehicleColor() != null
+                && !vehicleRequest.getVehicleColor().equals(vehicle.getVehicleColor())) {
+            vehicle.setVehicleColor(vehicleRequest.getVehicleColor());
+        }
 
-    @Override
-    public Vehicle updateVehicleById(Long id, Vehicle vehicleUpdate) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'updateVehicleById'");
+        if (vehicleRequest.getVehicleType() != null
+                && !vehicleRequest.getVehicleType().equals(vehicle.getVehicleType())) {
+            vehicle.setVehicleType(vehicleRequest.getVehicleType());
+        }
+
+        if (vehicleRequest.getVehicleLicensePlate() != null
+                && !vehicleRequest.getVehicleLicensePlate().equals(vehicle.getVehicleLicensePlate())) {
+            vehicle.setVehicleLicensePlate(vehicleRequest.getVehicleLicensePlate());
+        }
+
+        Vehicle updated = vehicleRepository.save(vehicle);
+
+        return VehicleResponse.builder()
+                .id(updated.getId())
+                .vehicleBrand(updated.getVehicleBrand())
+                .vehicleColor(updated.getVehicleColor())
+                .vehicleType(updated.getVehicleType())
+                .vehicleName(updated.getVehicleName())
+                .vehicleLicensePlate(updated.getVehicleLicensePlate())
+                .build();
     }
 
     @Override
     public void deleteVehicleById(Long id) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteVehicleById'");
+        vehicleRepository.deleteById(id);
     }
 
 }
