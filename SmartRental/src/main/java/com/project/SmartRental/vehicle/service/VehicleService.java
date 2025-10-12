@@ -2,13 +2,12 @@ package com.project.SmartRental.vehicle.service;
 
 import java.util.Optional;
 
-import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
-import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import com.project.SmartRental.vehicle.model.Vehicle;
+import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
+import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
 
 @Service
 public interface VehicleService {

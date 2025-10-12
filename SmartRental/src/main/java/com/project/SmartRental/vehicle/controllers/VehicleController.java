@@ -1,12 +1,9 @@
 package com.project.SmartRental.vehicle.controllers;
 
 import java.util.Optional;
-import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.SmartRental.exception.custom.ResourceNotFoundException;
 import com.project.SmartRental.vehicle.dto.req.VehicleRequest;
 import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
-import com.project.SmartRental.vehicle.model.Vehicle;
 import com.project.SmartRental.vehicle.service.VehicleService;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -62,13 +58,13 @@ public class VehicleController {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
     ) {
-            Sort sort = sortDir.equalsIgnoreCase("asc")
-                    ? Sort.by(sortBy).ascending()
-                    : Sort.by(sortBy).descending();
+        Sort sort = sortDir.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
 
-            Pageable pageable = PageRequest.of(page, size, sort);
-            Page<VehicleResponse> vehicles = vehicleService.getAllVehicle(pageable);
-            return new ResponseEntity<>(vehicles, HttpStatus.OK);
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<VehicleResponse> vehicles = vehicleService.getAllVehicle(pageable);
+        return new ResponseEntity<>(vehicles, HttpStatus.OK);
     }
 
     // get by id

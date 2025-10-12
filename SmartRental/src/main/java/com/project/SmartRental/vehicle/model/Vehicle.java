@@ -1,7 +1,5 @@
 package com.project.SmartRental.vehicle.model;
 
-import java.util.UUID;
-
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
