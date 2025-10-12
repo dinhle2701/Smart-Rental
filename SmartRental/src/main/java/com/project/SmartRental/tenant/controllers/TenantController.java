@@ -1,10 +1,18 @@
 package com.project.SmartRental.tenant.controllers;
 
-import org.springframework.web.bind.annotation.*;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.extensions.Extension;
 import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @Tag(
         name = "api_tenant",
@@ -45,7 +53,7 @@ public class TenantController {
     }
 
     @Operation(
-            summary = "AUpdate tenant",
+            summary = "Update tenant",
             description = "Cập nhật toàn bộ thông tin khách thuê theo ID",
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "4"))
     )

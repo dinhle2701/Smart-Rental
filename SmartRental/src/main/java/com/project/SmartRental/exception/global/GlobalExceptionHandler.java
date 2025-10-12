@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<ExceptionResponse> handleAccessDenied(AccessDeniedException ex) {
         ExceptionResponse response = new ExceptionResponse(ex);
-        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
     }
 
     // 🔸 2. Lỗi tài nguyên không tìm thấy (tự custom)

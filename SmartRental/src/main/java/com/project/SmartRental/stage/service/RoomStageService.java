@@ -1,14 +1,13 @@
 package com.project.SmartRental.stage.service;
 
-import com.project.SmartRental.stage.dto.req.ContractStageReq;
-import com.project.SmartRental.stage.dto.req.RoomStageReq;
-import com.project.SmartRental.stage.dto.res.ContractStageResp;
-import com.project.SmartRental.stage.dto.res.RoomStageResp;
+import java.util.Optional;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import com.project.SmartRental.stage.dto.req.RoomStageReq;
+import com.project.SmartRental.stage.dto.res.RoomStageResp;
 
 @Service
 public interface RoomStageService {

@@ -1,6 +1,5 @@
 package com.project.SmartRental.stage.controllers;
 
-import com.project.SmartRental.services.dto.res.ServiceResponse;
 import com.project.SmartRental.stage.dto.req.ContractStageReq;
 import com.project.SmartRental.stage.dto.res.ContractStageResp;
 import com.project.SmartRental.stage.service.ContractStageService;
@@ -11,7 +10,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,7 +32,7 @@ public class ContractStageController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
-    ){
+    ) {
         Sort sort = sortDir.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -44,28 +42,28 @@ public class ContractStageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<ContractStageResp>> getContractStageById(@PathVariable Long id){
+    public ResponseEntity<Optional<ContractStageResp>> getContractStageById(@PathVariable Long id) {
         Optional<ContractStageResp> contractStageResp = contractStageService.getContractStageById(id);
         return new ResponseEntity<>(contractStageResp, HttpStatus.OK);
     }
 
     // api create contract stage
     @PostMapping("")
-    public ResponseEntity<ContractStageResp> createContractStage(@RequestBody ContractStageReq contractStageReq){
+    public ResponseEntity<ContractStageResp> createContractStage(@RequestBody ContractStageReq contractStageReq) {
         ContractStageResp contractStageResp = contractStageService.createContractStage(contractStageReq);
         return new ResponseEntity<>(contractStageResp, HttpStatus.CREATED);
     }
 
     // api update by id
     @PutMapping("/{id}")
-    public ResponseEntity<ContractStageResp> updateContractStage(@PathVariable Long id, @RequestBody ContractStageReq contractStageReq){
+    public ResponseEntity<ContractStageResp> updateContractStage(@PathVariable Long id, @RequestBody ContractStageReq contractStageReq) {
         ContractStageResp contractStageResp = contractStageService.updateContractStageById(id, contractStageReq);
         return new ResponseEntity<>(contractStageResp, HttpStatus.OK);
     }
 
     // api delete by id
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@PathVariable Long id) {
         contractStageService.deleteContractStage(id);
     }
 

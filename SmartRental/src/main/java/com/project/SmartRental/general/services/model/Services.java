@@ -1,4 +1,4 @@
-package com.project.SmartRental.services.model;
+package com.project.SmartRental.general.services.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -24,5 +24,5 @@ public class Services {
 
     @Column(name = "serviceType")
     private String serviceType;
-    
+
 }

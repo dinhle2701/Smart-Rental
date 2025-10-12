@@ -1,4 +1,4 @@
-package com.project.SmartRental.services.dto.res;
+package com.project.SmartRental.general.services.dto.res;
 
 import lombok.Builder;
 import lombok.Getter;

@@ -1,19 +1,18 @@
 package com.project.SmartRental.vehicle.service;
 
-import com.project.SmartRental.vehicle.dto.res.VehicleResponse;
-import com.project.SmartRental.vehicle.repository.VehicleRepository;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-
-import com.project.SmartRental.vehicle.model.Vehicle;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-import java.util.UUID;
+import com.project.SmartRental.vehicle.model.Vehicle;
+import com.project.SmartRental.vehicle.repository.VehicleRepository;
 
 @Service
 public class VehicleServiceImpl implements VehicleService {
+
     @Autowired
     private VehicleRepository vehicleRepository;
 

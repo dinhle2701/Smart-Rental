@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -151,20 +152,13 @@ public class VehicleController {
         return "Partially update tenant with ID: " + id;
     }
 
-    // ------------------ DELETE ------------------
-//    @Operation(
-//            summary = "Delete vehicle",
-//            description = "Xóa phương tiện theo ID",
-//            extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "4"))
-//    )
-//    @DeleteMapping("/{id}")
-//    public ResponseEntity<Void> deleteVehicle(@PathVariable Long id) {
-//        boolean exists = vehicleService.getVehicleById(id).isPresent();
-//        if (!exists) {
-//            throw e;
-//        }
-//
-//        vehicleService.deleteVehicleById(id);
-//        return ResponseEntity.noContent().build();
-//    }
+    @Operation(
+            summary = "Delete vehicle",
+            description = "Xóa phương tiện theo ID",
+            extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "5"))
+    )
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Long id) {
+        vehicleService.deleteVehicleById(id);
+    }
 }

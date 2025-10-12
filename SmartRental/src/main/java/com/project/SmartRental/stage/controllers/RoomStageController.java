@@ -1,12 +1,7 @@
 package com.project.SmartRental.stage.controllers;
 
-import com.project.SmartRental.stage.dto.req.ContractStageReq;
-import com.project.SmartRental.stage.dto.req.RoomStageReq;
-import com.project.SmartRental.stage.dto.res.ContractStageResp;
-import com.project.SmartRental.stage.dto.res.RoomStageResp;
-import com.project.SmartRental.stage.service.ContractStageService;
-import com.project.SmartRental.stage.service.RoomStageService;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -14,9 +9,21 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
+import com.project.SmartRental.stage.dto.req.RoomStageReq;
+import com.project.SmartRental.stage.dto.res.RoomStageResp;
+import com.project.SmartRental.stage.service.RoomStageService;
+
+import io.swagger.v3.oas.annotations.tags.Tag;
 
 @RestController
 @RequestMapping("/api/v1/roomStage")
@@ -25,6 +32,7 @@ import java.util.Optional;
         description = "API xử lý các nghiệp vụ liên quan đến các giai đoạn của phòng"
 )
 public class RoomStageController {
+
     @Autowired
     private RoomStageService roomStageService;
 
@@ -34,7 +42,7 @@ public class RoomStageController {
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir
-    ){
+    ) {
         Sort sort = sortDir.equalsIgnoreCase("asc")
                 ? Sort.by(sortBy).ascending()
                 : Sort.by(sortBy).descending();
@@ -44,28 +52,28 @@ public class RoomStageController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Optional<RoomStageResp>> getContractStageById(@PathVariable Long id){
+    public ResponseEntity<Optional<RoomStageResp>> getContractStageById(@PathVariable Long id) {
         Optional<RoomStageResp> contractStageResp = roomStageService.getRoomStageById(id);
         return new ResponseEntity<>(contractStageResp, HttpStatus.OK);
     }
 
     // api create contract stage
     @PostMapping("")
-    public ResponseEntity<RoomStageResp> createContractStage(@RequestBody RoomStageReq roomStageReq){
+    public ResponseEntity<RoomStageResp> createContractStage(@RequestBody RoomStageReq roomStageReq) {
         RoomStageResp roomStageResp = roomStageService.createRoomStage(roomStageReq);
         return new ResponseEntity<>(roomStageResp, HttpStatus.CREATED);
     }
 
     // api update by id
     @PutMapping("/{id}")
-    public ResponseEntity<RoomStageResp> updateContractStage(@PathVariable Long id, @RequestBody RoomStageReq roomStageReq){
+    public ResponseEntity<RoomStageResp> updateContractStage(@PathVariable Long id, @RequestBody RoomStageReq roomStageReq) {
         RoomStageResp roomStageResp = roomStageService.updateRoomStageById(id, roomStageReq);
         return new ResponseEntity<>(roomStageResp, HttpStatus.OK);
     }
 
     // api delete by id
     @DeleteMapping("/{id}")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@PathVariable Long id) {
         roomStageService.deleteRoomStageById(id);
     }
 

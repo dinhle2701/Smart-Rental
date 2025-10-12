@@ -1,4 +1,4 @@
-package com.project.SmartRental.services.dto.req;
+package com.project.SmartRental.general.services.dto.req;
 
 import lombok.Getter;
 import lombok.Setter;
