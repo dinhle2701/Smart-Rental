@@ -80,17 +80,20 @@ public class ContractStageServiceImpl implements ContractStageService {
         );
 
         // 2️⃣ Kiểm tra giá trị mới, nếu có thay đổi thì mới cập nhật
-        if (contractStageReq.getContractStageName() != null && !contractStageReq.getContractStageName().equals(contractStageReq.getContractStageName())) {
+        if (contractStageReq.getContractStageName() != null
+                && !contractStageReq.getContractStageName().equals(contractStage.getContractStageName())) {
             contractStage.setContractStageName(contractStageReq.getContractStageName());
         }
 
-        if (contractStageReq.getDescription() != null && !contractStageReq.getDescription().equals(contractStage.getDescription())) {
+        if (contractStageReq.getDescription() != null
+                && !contractStageReq.getDescription().equals(contractStage.getDescription())) {
             contractStage.setDescription(contractStageReq.getDescription());
         }
 
 
         // 3️⃣ Lưu lại thay đổi
         ContractStage updated = contractStageRepository.save(contractStage);
+
         return ContractStageResp.builder()
                 .id(updated.getId())
                 .contractStageName(updated.getContractStageName())
