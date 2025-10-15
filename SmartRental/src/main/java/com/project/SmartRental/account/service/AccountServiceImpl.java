@@ -109,4 +109,21 @@ public class AccountServiceImpl implements AccountService {
     public void deleteAccount(Long id) {
         accountRepository.deleteById(id);
     }
+
+    @Override
+    public Optional<AccountRes> checkStatus(Long id) {
+        return accountRepository.findById(id)
+                .map(account -> AccountRes.builder()
+                        .accountId(account.getAccountId())
+                        .accountName(account.getAccountName())
+                        .accountCode(account.getAccountCode())
+                        .phoneNumber(account.getPhoneNumber())
+                        .address(account.getAddress())
+                        .imgURL(account.getImgURL())
+                        .email(account.getEmail())
+                        .role(account.getRole())
+                        .createAt(account.getCreateAt())
+                        .updateAt(account.getUpdateAt())
+                        .build());
+    }
 }

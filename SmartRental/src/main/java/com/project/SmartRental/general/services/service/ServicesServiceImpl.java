@@ -27,6 +27,7 @@ public class ServicesServiceImpl implements ServicesService {
                     .id(service.getId())
                     .serviceName(service.getServiceName())
                     .serviceType(service.getServiceType())
+                    .price(service.getPrice())
                     .build()
                     );
         } catch (Exception e) {
@@ -39,12 +40,14 @@ public class ServicesServiceImpl implements ServicesService {
         Services service = new Services();
         service.setServiceName(serviceRequest.getServiceName());
         service.setServiceType(serviceRequest.getServiceType());
+        service.setPrice(serviceRequest.getPrice());
         Services saved = serviceRepository.save(service);
 
         return ServiceResponse.builder()
                 .id(saved.getId())
                 .serviceName(saved.getServiceName())
                 .serviceType(saved.getServiceType())
+                .price(saved.getPrice())
                 .build();
     }
 
@@ -56,6 +59,7 @@ public class ServicesServiceImpl implements ServicesService {
                 .serviceName(services.getServiceName())
                 .serviceName(services.getServiceName())
                 .serviceType(services.getServiceType())
+                .price(services.getPrice())
                 .build());
     }
 
@@ -80,13 +84,16 @@ public class ServicesServiceImpl implements ServicesService {
             isUpdated = true;
         }
 
+        if (serviceRequest.getPrice() != null
+                && !serviceRequest.getPrice().equals(services.getPrice())) {
+            services.setPrice(serviceRequest.getPrice());
+            isUpdated = true;
+        }
+
         if (isUpdated) {
             services = serviceRepository.save(services);
         }
 
-//        services.setServiceName(serviceRequest.getServiceName());
-//        services.setServiceType(serviceRequest.getServiceType());
-//        Services updated = serviceRepository.save(services);
         if (isUpdated) {
             services = serviceRepository.save(services);
         }
@@ -95,6 +102,7 @@ public class ServicesServiceImpl implements ServicesService {
                 .id(services.getId())
                 .serviceName(services.getServiceName())
                 .serviceType(services.getServiceType())
+                .price(services.getPrice())
                 .build();
     }
 

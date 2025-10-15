@@ -18,4 +18,6 @@ public interface AccountService {
     AccountRes updateAccount(Long id, AccountReq accountReq);
 
     void deleteAccount(Long id);
+
+    Optional<AccountRes> checkStatus(Long id);
 }

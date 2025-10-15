@@ -39,18 +39,21 @@ public class SecurityConfig {
                 // Cấu hình quyền truy cập
                 .authorizeHttpRequests(auth -> auth
                 .requestMatchers("/api/auth/**").permitAll()
-
-                .requestMatchers("/api/contract").hasAnyRole("ADMIN", "USER")
-                .requestMatchers("/api/v1/vehicle").hasRole("ADMIN")
-                .requestMatchers("/api/hostel").hasRole("ADMIN")
-                .requestMatchers("/api/v1/tenant").hasRole("ADMIN")
-                .requestMatchers("/api/v1/revenue").hasRole("ADMIN")
-                .requestMatchers("/api/service").hasRole("ADMIN")
-                .requestMatchers("/swagger-ui/index.html").permitAll()
+                .requestMatchers("/api/v1/contract").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/v1/vehicle").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/v1/hostel").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/v1/tenant").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/v1/revenue").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/v1/service").hasAnyRole("ADMIN", "USER")
+                .requestMatchers("/api/v1/notification").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/api/v1/roomStage").permitAll()
                 .requestMatchers("/api/v1/contractStage").permitAll()
-                //                        .anyRequest().authenticated()
-                .anyRequest().permitAll()
+                .requestMatchers(
+                        "/swagger-ui/**",
+                        "/v3/api-docs/**",
+                        "/swagger-ui.html"
+                ).permitAll()
+                .anyRequest().authenticated()
                 )
                 // Thêm filter JWT vào chuỗi xử lý
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

@@ -25,4 +25,7 @@ public class Services {
     @Column(name = "serviceType")
     private String serviceType;
 
+    @Column(name = "price")
+    private Double price;
+
 }

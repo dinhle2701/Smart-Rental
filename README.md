@@ -105,44 +105,44 @@ List all major components and tools used in the project:
 ### 📡 API Documentation
     👉 http://localhost:8009/swagger-ui.html
 
-- Endpoints
-    - Authentication
-        - POST /api/auth/login → Authenticate user
-        - POST /api/auth/register → Create new user
-    - Accounts
-        - GET /api/v1/account → Get all account
-        - GET /api/v1/account/{id} → Get account by ID
-        - PUT /api/v1/account/{id} → Update account
-        - DELETE /api/v1/account/{id} → Delete account
-    - Vehicle
-        - GET /api/v1/vehicle → Get all vehicle
-        - GET /api/v1/vehicle/{id} → Get vehicle by ID
-        - PUT /api/v1/vehicle/{id} → Update vehicle
-        - DELETE /api/v1/vehicle/{id} → Delete vehicle
-        - Patch /api/v1/vehicle/{id} → Update partial vehicle
-    - Home
-        - GET /api/v1/account → Get all account
-        - GET /api/v1/account/{id} → Get account by ID
-        - PUT /api/v1/account/{id} → Update account
-        - DELETE /api/v1/account/{id} → Delete account
-    - Stage
-        - GET /api/v1/contractStage → Get all contractStage
-        - POST /api/auth/contractStage → Create new user
-        - GET /api/v1/contractStage/{id} → Get contractStage by ID
-        - PUT /api/v1/contractStage/{id} → Update contractStage
-        - DELETE /api/v1/contractStage/{id} → Delete contractStage
-      
-        - GET /api/v1/roomStage → Get all roomStage
-        - POST /api/auth/contractStage → Create new roomStage
-        - GET /api/v1/roomStage/{id} → Get roomStage by ID
-        - PUT /api/v1/roomStage/{id} → Update roomStage
-        - DELETE /api/v1/roomStage/{id} → Delete roomStage
-    - Tenant
-        - GET /api/v1/tenant → Get all tenant
-        - GET /api/v1/tenant/{id} → Get tenant by ID
-        - POST /api/v1/tenant → Create new tenant
-        - PUT /api/v1/tenant/{id} → tenant account
-        - DELETE /api/v1/tenant/{id} → tenant account
+    👉 Endpoints
+        - Authentication
+            - POST /api/auth/login → Authenticate user
+            - POST /api/auth/register → Create new user
+        - Accounts
+            - GET /api/v1/account → Get all account
+            - GET /api/v1/account/{id} → Get account by ID
+            - PUT /api/v1/account/{id} → Update account
+            - DELETE /api/v1/account/{id} → Delete account
+        - Vehicle
+            - GET /api/v1/vehicle → Get all vehicle
+            - GET /api/v1/vehicle/{id} → Get vehicle by ID
+            - PUT /api/v1/vehicle/{id} → Update vehicle
+            - DELETE /api/v1/vehicle/{id} → Delete vehicle
+            - Patch /api/v1/vehicle/{id} → Update partial vehicle
+        - Home
+            - GET /api/v1/account → Get all account
+            - GET /api/v1/account/{id} → Get account by ID
+            - PUT /api/v1/account/{id} → Update account
+            - DELETE /api/v1/account/{id} → Delete account
+        - Stage
+            - GET /api/v1/contractStage → Get all contractStage
+            - POST /api/auth/contractStage → Create new user
+            - GET /api/v1/contractStage/{id} → Get contractStage by ID
+            - PUT /api/v1/contractStage/{id} → Update contractStage
+            - DELETE /api/v1/contractStage/{id} → Delete contractStage
+          
+            - GET /api/v1/roomStage → Get all roomStage
+            - POST /api/auth/contractStage → Create new roomStage
+            - GET /api/v1/roomStage/{id} → Get roomStage by ID
+            - PUT /api/v1/roomStage/{id} → Update roomStage
+            - DELETE /api/v1/roomStage/{id} → Delete roomStage
+        - Tenant
+            - GET /api/v1/tenant → Get all tenant
+            - GET /api/v1/tenant/{id} → Get tenant by ID
+            - POST /api/v1/tenant → Create new tenant
+            - PUT /api/v1/tenant/{id} → tenant account
+            - DELETE /api/v1/tenant/{id} → tenant account
 ### ✅ Testing
 
         npm run build 

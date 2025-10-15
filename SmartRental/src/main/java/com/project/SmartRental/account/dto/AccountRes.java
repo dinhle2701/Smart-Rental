@@ -13,7 +13,6 @@ public class AccountRes {
     private String accountCode;
     private String accountName;
     private String email;
-    private String password;
     private String phoneNumber;
     private String address;
     private String role;

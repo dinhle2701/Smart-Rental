@@ -57,4 +57,10 @@ public class AccountController {
     public void deleteAccountById(@PathVariable Long id){
         accountService.deleteAccount(id);
     }
+
+    @GetMapping("/status/{id}")
+    public ResponseEntity<Optional<AccountRes>> checkStatus(@PathVariable Long id){
+        Optional<AccountRes> accountRes = accountService.checkStatus(id);
+        return new ResponseEntity<>(accountRes, HttpStatus.OK);
+    }
 }

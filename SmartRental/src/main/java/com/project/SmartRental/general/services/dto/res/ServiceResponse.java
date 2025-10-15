@@ -8,8 +8,8 @@ import lombok.Setter;
 @Setter
 @Builder
 public class ServiceResponse {
-
     private Long id;
     private String serviceName;
     private String serviceType;
+    private Double price;
 }

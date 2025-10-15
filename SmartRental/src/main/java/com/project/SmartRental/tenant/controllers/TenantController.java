@@ -1,18 +1,23 @@
 package com.project.SmartRental.tenant.controllers;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.project.SmartRental.tenant.dto.TenantReq;
+import com.project.SmartRental.tenant.dto.TenantRes;
+import com.project.SmartRental.tenant.service.TenantService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.extensions.Extension;
 import io.swagger.v3.oas.annotations.extensions.ExtensionProperty;
 import io.swagger.v3.oas.annotations.tags.Tag;
+
+import java.util.Optional;
 
 @Tag(
         name = "api_tenant",
@@ -21,6 +26,8 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RestController
 @RequestMapping("/api/v1/tenant")
 public class TenantController {
+    @Autowired
+    private TenantService tenantService;
 
     @Operation(
             summary = "Get all tenants",
@@ -28,8 +35,20 @@ public class TenantController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "1"))
     )
     @GetMapping("")
-    public String getAllTenant() {
-        return "Get all tenants";
+    public ResponseEntity<Page<TenantRes>> getAllTenant(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "50") int size,
+            @RequestParam(defaultValue = "id") String sortBy,
+            @RequestParam(defaultValue = "asc") String sortDir
+
+    ) {
+        Sort sort = sortDir.equalsIgnoreCase("asc")
+                ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+
+        Pageable pageable = PageRequest.of(page, size, sort);
+        Page<TenantRes> tenantRes = tenantService.getTenants(pageable);
+        return new ResponseEntity<>(tenantRes, HttpStatus.OK);
     }
 
     @Operation(
@@ -38,8 +57,9 @@ public class TenantController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "2"))
     )
     @GetMapping("/{id}")
-    public String getTenantById(@PathVariable String id) {
-        return "Get tenant with ID: " + id;
+    public ResponseEntity<Optional<TenantRes>> getTenantById(@PathVariable Long id) {
+        Optional<TenantRes> tenantRes = tenantService.getById(id);
+        return new ResponseEntity<>(tenantRes, HttpStatus.OK);
     }
 
     @Operation(
@@ -48,8 +68,9 @@ public class TenantController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "3"))
     )
     @PostMapping("")
-    public String createTenant() {
-        return "Create a new tenant";
+    public ResponseEntity<TenantRes> createTenant(@RequestBody TenantReq tenantReq) {
+        TenantRes tenantRes = tenantService.createTenant(tenantReq);
+        return new ResponseEntity<>(tenantRes, HttpStatus.OK);
     }
 
     @Operation(
@@ -58,8 +79,9 @@ public class TenantController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "4"))
     )
     @PutMapping("/{id}")
-    public String updateTenant(@PathVariable String id) {
-        return "Update tenant with ID: " + id;
+    public ResponseEntity<TenantRes> updateTenant(@PathVariable Long id, @RequestBody TenantReq tenantReq) {
+        TenantRes tenantRes = tenantService.updateTenant(id, tenantReq);
+        return new ResponseEntity<>(tenantRes, HttpStatus.OK);
     }
 
     @Operation(
@@ -78,7 +100,7 @@ public class TenantController {
             extensions = @Extension(properties = @ExtensionProperty(name = "x-order", value = "6"))
     )
     @DeleteMapping("/{id}")
-    public String deleteTenant(@PathVariable String id) {
-        return "Delete tenant with ID: " + id;
+    public void deleteTenant(@PathVariable Long id) {
+        tenantService.deleteTenant(id);
     }
 }
