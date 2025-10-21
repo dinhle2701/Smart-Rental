@@ -1,19 +1,18 @@
 package com.project.SmartRental.hostel.dto;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import java.time.LocalDateTime;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 public class HostelRes {
+
     private Long id;
 
     private String hostelName;
